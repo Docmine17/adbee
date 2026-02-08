@@ -34,10 +34,10 @@ class AdbeeApplication(Adw.Application):
         about = Adw.AboutDialog(
             application_name='ADBee',
             application_icon='io.github.docmine17.adbee',
-            developer_name='Gabriel',
+            developer_name='Docmine17',
             version=self.version,
-            developers=['Gabriel'],
-            copyright='© 2026 Gabriel',
+            developers=['Docmine17'],
+            copyright='© 2026 Docmine17',
             license_type=Gtk.License.GPL_3_0,
             website='https://github.com/Docmine17/adbee',
             issue_url='https://github.com/Docmine17/adbee/issues',

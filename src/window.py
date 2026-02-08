@@ -35,6 +35,12 @@ class AdbeeWindow(Adw.ApplicationWindow):
         
         # Gerar QR code inicial
         self.generate_new_pairing()
+        
+        # Solicitar background mode
+        self.request_background()
+        
+        # Interceptar fechamento da janela
+        self.connect('close-request', self.on_close_request)
     
     @Gtk.Template.Callback()
     def on_generate_clicked(self, button):
@@ -93,3 +99,52 @@ class AdbeeWindow(Adw.ApplicationWindow):
         self.toast_overlay.add_toast(toast)
         
         return False
+
+    def request_background(self):
+        """Solicita permissão para rodar em segundo plano."""
+        try:
+            bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+            proxy = Gio.DBusProxy.new_sync(
+                bus,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                "org.freedesktop.portal.Desktop",
+                "/org/freedesktop/portal/desktop",
+                "org.freedesktop.portal.Background",
+                None
+            )
+            
+            # Chamada síncrona ao portal
+            # RequestBackground(parent_window, options) -> handle
+            proxy.call_sync(
+                "RequestBackground",
+                GLib.Variant("(sa{sv})", (
+                    "",
+                    {
+                        "reason": GLib.Variant("s", _("Keep ADB connections active")),
+                        "autostart": GLib.Variant("b", True)
+                    }
+                )),
+                Gio.DBusCallFlags.NONE,
+                -1,
+                None
+            )
+            
+            print("[Background] Permission requested successfully")
+            self.background_enabled = True
+            
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            print(f"[Background] Failed to request background: {e!r}")
+            if isinstance(e, GLib.Error):
+                print(f"[Background] GError code: {e.code}, domain: {e.domain}")
+            self.background_enabled = False
+
+    def on_close_request(self, *args):
+        """Ao fechar a janela, esconde se tiver permissão de background."""
+        if getattr(self, 'background_enabled', False):
+            print("[Background] Hiding window instead of closing")
+            self.set_visible(False)
+            return True # Retornar True impede a destruição da janela
+        return False # Comportamento padrão (destruir)

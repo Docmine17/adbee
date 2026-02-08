@@ -14,6 +14,8 @@ finish-args:
   - --device=dri
   # Talk to host ADB daemon
   - --talk-name=org.freedesktop.Flatpak
+  - --talk-name=org.freedesktop.portal.Desktop
+  - --talk-name=org.freedesktop.portal.Background
   # Access to android-tools (adb)
   - --filesystem=~/.android:ro
 

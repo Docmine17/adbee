@@ -1,5 +1,5 @@
 # Portuguese (Brazil) translation for ADBee
-# Copyright (C) 2026 Gabriel
+# Copyright (C) 2026 Docmine17
 # This file is distributed under the same license as the ADBee package.
 #
 msgid ""
