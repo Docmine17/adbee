@@ -2,11 +2,13 @@
 
 🐝 Connect Android devices via ADB WiFi using QR code.
 
+<img width="450" height="606" alt="image" src="https://github.com/user-attachments/assets/ef1fa328-aa41-4745-a31c-0f8a7680cd37" />
+
+
+
 Simply scan the QR code shown in the app with your Android device's "Pair device with QR code" feature in Developer Options.
 
 ## Requirements
-
-- Python 3.10+
 - Python 3.10+
 - GTK4
 - Libadwaita
@@ -43,4 +45,4 @@ sudo meson install -C build
 
 ## License
 
-GPL-3.0-or-later
+GPL-3.0
