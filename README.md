@@ -46,3 +46,6 @@ sudo meson install -C build
 ## License
 
 GPL-3.0
+
+## Credits
+TODO
