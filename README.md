@@ -7,16 +7,18 @@ Simply scan the QR code shown in the app with your Android device's "Pair device
 ## Requirements
 
 - Python 3.10+
+- Python 3.10+
 - GTK4
 - Libadwaita
-- qrcode (`pip install qrcode[pil]`)
+- qrcode (`pip install qrcode`)
 - zeroconf (`pip install zeroconf`)
+- pypng (`pip install pypng`)
 
 ## Running (Development)
 
 ```bash
 # Install dependencies
-pip install qrcode[pil] zeroconf
+pip install qrcode zeroconf pypng
 
 # Run
 python run.py
