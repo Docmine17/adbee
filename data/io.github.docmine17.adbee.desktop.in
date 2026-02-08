@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=ADBee
+Comment=Connect Android devices via ADB WiFi using QR code
+Exec=adbee
+Icon=io.github.docmine17.adbee
+Terminal=false
+Type=Application
+Categories=Development;Utility;
+Keywords=adb;android;wireless;wifi;debug;
+StartupNotify=true

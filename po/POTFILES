@@ -1,0 +1,4 @@
+data/io.github.gabriel.adbee.desktop.in
+data/io.github.gabriel.adbee.metainfo.xml.in
+src/window.py
+src/main.py

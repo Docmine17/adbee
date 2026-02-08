@@ -1,0 +1,35 @@
+# Spanish translation for ADBee
+# Copyright (C) 2026 Gabriel
+# This file is distributed under the same license as the ADBee package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: adbee 1.0.0\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/window.ui:19
+msgid "Menu"
+msgstr "Menú"
+
+#: src/window.ui:54
+msgid "Generating QR code..."
+msgstr "Generando código QR..."
+
+#: src/window.ui:76
+msgid "Service:"
+msgstr "Servicio:"
+
+#: src/window.ui:100
+msgid "Code:"
+msgstr "Código:"
+
+#: src/window.ui:124
+msgid "Generate New Code"
+msgstr "Generar Nuevo Código"
+
+#: src/window.ui:145
+msgid "About ADBee"
+msgstr "Acerca de ADBee"

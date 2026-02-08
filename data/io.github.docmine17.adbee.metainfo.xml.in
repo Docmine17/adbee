@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.docmine17.adbee</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>ADBee</name>
+  <summary>Connect Android devices via ADB WiFi using QR code</summary>
+  <description>
+    <p>
+      ADBee makes it easy to connect your Android device to your computer for wireless debugging.
+      Simply scan the QR code shown in the app with your Android device's "Pair device with QR code"
+      feature in Developer Options, and you're connected!
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Generate QR codes for instant ADB wireless pairing</li>
+      <li>No USB cable needed after initial setup</li>
+      <li>Works with Android 11 and later</li>
+      <li>Simple, clean interface</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.docmine17.adbee.desktop</launchable>
+  <url type="homepage">https://github.com/Docmine17/adbee</url>
+  <url type="bugtracker">https://github.com/Docmine17/adbee/issues</url>
+  <developer id="io.github.docmine17">
+    <name>Gabriel</name>
+  </developer>
+  <branding>
+    <color type="primary" scheme_preference="light">#f6d32d</color>
+    <color type="primary" scheme_preference="dark">#986a44</color>
+  </branding>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="1.0.0" date="2026-02-06">
+      <description>
+        <p>Initial release</p>
+      </description>
+    </release>
+  </releases>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+</component>
