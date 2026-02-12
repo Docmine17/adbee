@@ -25,12 +25,15 @@ class AdbeeWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-        self.adb_service = AdbService()
+        self.settings = Gio.Settings(schema_id='io.github.docmine17.adbee')
+        
+        self.adb_service = AdbService(auto_connect=self.settings.get_boolean("auto-connect"))
         self.qr_generator = QRGenerator()
         
         # Conectar callbacks
         self.adb_service.on_paired = self.on_device_paired
         self.adb_service.on_connected = self.on_device_connected
+        self.settings.connect("changed::auto-connect", self.on_auto_connect_changed)
         
         # Gerar QR code inicial
         self.generate_new_pairing()
@@ -40,6 +43,10 @@ class AdbeeWindow(Adw.ApplicationWindow):
         
         # Interceptar fechamento da janela
         self.connect('close-request', self.on_close_request)
+    
+    def on_auto_connect_changed(self, settings, key):
+        """Update service when setting changes."""
+        self.adb_service.auto_connect = settings.get_boolean("auto-connect")
     
     @Gtk.Template.Callback()
     def on_generate_clicked(self, button):

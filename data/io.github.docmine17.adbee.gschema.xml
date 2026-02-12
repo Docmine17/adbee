@@ -9,5 +9,9 @@
       <default>500</default>
       <summary>Window height</summary>
     </key>
+    <key name="auto-connect" type="b">
+      <default>true</default>
+      <summary>Automatically connect to paired devices</summary>
+    </key>
   </schema>
 </schemalist>

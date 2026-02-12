@@ -55,7 +55,7 @@ class AdbPairingListener(ServiceListener):
             port = info.port
             
             cmd = ["adb", "pair", f"{ip_address}:{port}", self.pairing_code]
-            print(f"[ADB] Executing: {' '.join(cmd[:-1])} ******")
+            # print(f"[ADB] Executing: {' '.join(cmd[:-1])} ******")
             
             process = subprocess.run(
                 cmd,
@@ -87,8 +87,9 @@ class AdbConnectListener(ServiceListener):
     Quando detectamos esse serviço, chamamos 'adb connect' automaticamente.
     """
     
-    def __init__(self, on_connected: Callable[[str], None] | None = None):
+    def __init__(self, on_connected: Callable[[str], None] | None = None, auto_connect: bool = True):
         self.on_connected = on_connected
+        self.auto_connect = auto_connect
         self.connected_devices = set()
         self.last_seen_service = None  # (ip, port)
     
@@ -108,6 +109,10 @@ class AdbConnectListener(ServiceListener):
     
     def _connect_device(self, info: ServiceInfo) -> None:
         """Conecta ao dispositivo quando o serviço de conexão é detectado."""
+        if not self.auto_connect:
+            print(f"[ADB] Auto-connect disabled. Ignoring service {info.name}")
+            return
+
         try:
             addresses = info.ip_addresses_by_version(IPVersion.V4Only)
             if not addresses:
@@ -178,14 +183,28 @@ class AdbService:
     PAIRING_SERVICE_TYPE = "_adb-tls-pairing._tcp.local."
     CONNECT_SERVICE_TYPE = "_adb-tls-connect._tcp.local."
     
-    def __init__(self):
+    def __init__(self, auto_connect: bool = True):
         self.zeroconf: Zeroconf | None = None
         self.pairing_browser: ServiceBrowser | None = None
         self.connect_browser: ServiceBrowser | None = None
         self.service_name: str = ""
         self.pairing_code: str = ""
         self.on_paired: Callable[[str], None] | None = None
+        self.on_connected: Callable[[str], None] | None = None
         self._running = False
+        self._auto_connect = auto_connect
+        self.connect_listener_instance: AdbConnectListener | None = None
+
+    @property
+    def auto_connect(self) -> bool:
+        return self._auto_connect
+
+    @auto_connect.setter
+    def auto_connect(self, value: bool):
+        self._auto_connect = value
+        if self.connect_listener_instance:
+            self.connect_listener_instance.auto_connect = value
+            print(f"[ADB] Auto-connect set to {value}")
     
     def generate_credentials(self) -> tuple[str, str]:
         """
@@ -251,7 +270,8 @@ class AdbService:
             
             # Browser para conexão
             self.connect_listener_instance = AdbConnectListener(
-                on_connected=_handle_connected
+                on_connected=_handle_connected,
+                auto_connect=self._auto_connect
             )
             
             self.connect_browser = ServiceBrowser(

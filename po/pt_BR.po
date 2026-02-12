@@ -33,3 +33,11 @@ msgstr "Gerar Novo Código"
 #: src/window.ui:145
 msgid "About ADBee"
 msgstr "Sobre o ADBee"
+
+#: src/window.ui:120
+msgid "Auto Connect"
+msgstr "Conectar Automaticamente"
+
+#: data/io.github.docmine17.adbee.gschema.xml:13
+msgid "Automatically connect to paired devices"
+msgstr "Conectar automaticamente a dispositivos pareados"

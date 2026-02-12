@@ -23,6 +23,13 @@ class AdbeeApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.start_hidden = False
         
+        # Load Settings
+        self.settings = Gio.Settings(schema_id='io.github.docmine17.adbee')
+        
+        # Auto-connect action
+        action = self.settings.create_action("auto-connect")
+        self.add_action(action)
+        
         self.add_main_option(
             "background",
             ord("b"),

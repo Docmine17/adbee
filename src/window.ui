@@ -142,6 +142,12 @@
   <menu id="primary_menu">
     <section>
       <item>
+        <attribute name="label" translatable="yes">Auto Connect</attribute>
+        <attribute name="action">app.auto-connect</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">About ADBee</attribute>
         <attribute name="action">app.about</attribute>
       </item>
