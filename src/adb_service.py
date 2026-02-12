@@ -54,11 +54,11 @@ class AdbPairingListener(ServiceListener):
             ip_address = addresses[0].exploded
             port = info.port
             
-            cmd = f"adb pair {ip_address}:{port} {self.pairing_code}"
-            print(f"[ADB] Executing: adb pair {ip_address}:{port} ******")
+            cmd = ["adb", "pair", f"{ip_address}:{port}", self.pairing_code]
+            print(f"[ADB] Executing: {' '.join(cmd[:-1])} ******")
             
             process = subprocess.run(
-                cmd.split(),
+                cmd,
                 capture_output=True,
                 text=True,
                 timeout=30
@@ -135,10 +135,10 @@ class AdbConnectListener(ServiceListener):
             for attempt in range(1, max_retries + 1):
                 print(f"[ADB] Connecting to {ip_address}:{port} (attempt {attempt}/{max_retries})...")
                 
-                cmd = f"adb connect {ip_address}:{port}"
+                cmd = ["adb", "connect", f"{ip_address}:{port}"]
                 
                 process = subprocess.run(
-                    cmd.split(),
+                    cmd,
                     capture_output=True,
                     text=True,
                     timeout=5
@@ -272,14 +272,14 @@ class AdbService:
             ip, port = self.connect_listener_instance.last_seen_service
             print(f"[ADB] Opportunistic connection attempt to {ip}:{port}...")
             
-            cmd = f"adb connect {ip}:{port}"
+            cmd = ["adb", "connect", f"{ip}:{port}"]
             
             # Tentar por 5 segundos, pois o dispositivo pode demorar para abrir a porta após parear
             max_retries = 3
             for attempt in range(1, max_retries + 1):
                 try:
                     process = subprocess.run(
-                        cmd.split(),
+                        cmd,
                         capture_output=True,
                         text=True,
                         timeout=5

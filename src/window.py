@@ -121,7 +121,8 @@ class AdbeeWindow(Adw.ApplicationWindow):
                     "",
                     {
                         "reason": GLib.Variant("s", _("Keep ADB connections active")),
-                        "autostart": GLib.Variant("b", True)
+                        "autostart": GLib.Variant("b", True),
+                        "commandline": GLib.Variant("as", ['adbee', '--background']),
                     }
                 )),
                 Gio.DBusCallFlags.NONE,

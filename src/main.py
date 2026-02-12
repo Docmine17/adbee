@@ -16,17 +16,43 @@ class AdbeeApplication(Adw.Application):
     def __init__(self, version: str):
         super().__init__(
             application_id='io.github.docmine17.adbee',
-            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
         )
         self.version = version
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
+        self.start_hidden = False
+        
+        self.add_main_option(
+            "background",
+            ord("b"),
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.NONE,
+            "Start in background",
+            None,
+        )
+
+    def do_command_line(self, command_line):
+        options = command_line.get_options_dict()
+        self.start_hidden = options.contains("background")
+        self.activate()
+        return 0
 
     def do_activate(self):
         """Called when the application is activated."""
         win = self.props.active_window
+        
         if not win:
+            # Create window but don't show it yet
             win = AdbeeWindow(application=self)
+            
+            # If starting in background, just hold the app
+            if self.start_hidden:
+                # Reset flag so next activation (e.g. from menu) shows the window
+                self.start_hidden = False
+                # We don't present the window, just return.
+                return
+
         win.present()
 
     def on_about_action(self, *args):
